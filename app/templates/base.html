@@ -1,0 +1,47 @@
+    <!-- =====================================================
+         MEGHNA SMART RETURN — Shared App Header Partial
+         Include this in every page: {% include 'header.html' %}
+         Logo, nav header, and CSS are defined here ONCE.
+         ===================================================== -->
+    <link rel="stylesheet" href="/static/css/style.css?v=138">
+
+    <!-- Top Enterprise Banking Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar Navigation">
+                ☰
+            </button>
+            <div class="brand-section" onclick="window.location.href='/'">
+                <div class="brand-logo-wrap">
+                    <img src="/static/images/meghna_bank_logo.jpg?v=2" alt="Meghna Bank" class="brand-logo-img">
+                </div>
+                <div class="brand-titles">
+                    <span class="brand-name">MEGHNA SMART RETURN</span>
+                    <span class="brand-tagline">Automate • Validate • Monitor • Report</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- Database Status Indicator Badge -->
+            <div class="db-status-badge disconnected" id="nav-db-badge" onclick="openDBModal()" style="cursor:pointer;" title="Click to open DB Connection modal">
+                <span class="status-dot"></span>
+                <span id="nav-db-status-text">Database Disconnected</span>
+            </div>
+
+            <!-- Notifications -->
+            <div class="header-icon-btn" title="System Notifications">
+                🔔
+                <span class="badge-dot"></span>
+            </div>
+
+            <!-- User Profile Badge -->
+            <div class="user-profile-badge">
+                <span class="avatar">MB</span>
+                <div class="user-meta">
+                    <span class="user-name">Meghna Ops</span>
+                    <span class="user-role">Internal Admin</span>
+                </div>
+            </div>
+        </div>
+    </header>

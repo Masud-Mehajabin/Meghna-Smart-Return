@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Summary — Meghna Smart Return</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon.png?v=1">
+    <link rel="stylesheet" href="/static/css/style.css?v=142">
+</head>
+
+<body>
+    <!-- Top Enterprise Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar Navigation">
+                ☰
+            </button>
+            <div class="brand-section" onclick="window.location.href='/'">
+                <div class="brand-logo-wrap">
+                    <img src="/static/images/meghna_bank_logo.jpg?v=2" alt="Meghna Bank" class="brand-logo-img">
+                </div>
+                <div class="brand-titles">
+                    <span class="brand-name">MEGHNA SMART RETURN</span>
+                    <span class="brand-tagline">Automate • Validate • Monitor • Report</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- Database Status Indicator Badge -->
+            <div class="db-status-badge disconnected" id="nav-db-badge" onclick="openDBModal()" style="cursor:pointer;" title="Click to open DB Connection modal">
+                <span class="status-dot"></span>
+                <span id="nav-db-status-text">Database Disconnected</span>
+            </div>
+
+            <div class="header-icon-btn" title="System Notifications">
+                🔔
+                <span class="badge-dot"></span>
+            </div>
+
+            <div class="user-profile-badge">
+                <span class="avatar">MB</span>
+                <div class="user-meta">
+                    <span class="user-name">Meghna Ops</span>
+                    <span class="user-role">Internal Admin</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Enterprise 3-Part Layout Container -->
+    <div class="app-layout">
+
+        <!-- Collapsible Left Sidebar Navigation -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <div class="sidebar-nav-group">
+                <span class="sidebar-section-title">MAIN NAVIGATION</span>
+                
+                <a href="/" class="sidebar-btn" id="nav-tab-home" title="Dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                
+                <a href="/?view=validation" class="sidebar-btn" id="nav-tab-validation" title="Upload &amp; Validation">
+                    <span class="nav-icon">📤</span>
+                    <span class="nav-text">Upload &amp; Validation</span>
+                </a>
+                
+                <a href="/check-error" class="sidebar-btn active" id="nav-tab-check-error" title="Error Summary">
+                    <span class="nav-icon">⚠️</span>
+                    <span class="nav-text">Error Summary</span>
+                </a>
+
+                <button type="button" class="sidebar-btn" id="nav-tab-download-report" onclick="openReportModal()" title="Download Reports">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Download Reports</span>
+                </button>
+            </div>
+
+            <div class="sidebar-nav-group">
+                <span class="sidebar-section-title">PROCESS MONITORING</span>
+                
+                <div class="nav-dropdown nav-scheduler-summary-dropdown">
+                    <button type="button" class="sidebar-btn" id="nav-tab-scheduler-summary" onclick="toggleSchedulerSummaryDropdown(event)" title="Process Monitoring">
+                        <span class="nav-icon">🗓️</span>
+                        <span class="nav-text">Process Monitoring</span>
+                        <span class="chevron-icon" style="margin-left:auto;font-size:0.7rem;">▼</span>
+                    </button>
+                    <div class="dropdown-menu sidebar-submenu">
+                        <button type="button" class="dropdown-item" onclick="handleSchedulerItemClick(event)" title="Run Scheduler">
+                            <span>📅</span> <span>Scheduler</span>
+                        </button>
+                        <button type="button" class="dropdown-item" onclick="handleSummaryItemClick(event)" title="Run Summary">
+                            <span>📊</span> <span>Summary</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-nav-group">
+                <span class="sidebar-section-title">MONITORING</span>
+                
+                <a href="/logs" class="sidebar-btn" id="nav-tab-logs" title="Activity &amp; Upload Logs">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Activity &amp; Upload Logs</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Content Area -->
+        <main class="app-main-content">
+            <div class="check-error-container">
+
+                <div class="modal-header" style="border:none;margin-bottom:0.5rem">
+                    <div>
+                        <h2>⚠️ Validation Check Error Module</h2>
+                        <p style="font-size:0.78rem;color:var(--text-muted);">Inspect, search, and correct Bangladesh Bank Return validation error records.</p>
+                    </div>
+
+                    <button type="button" class="glass-btn-primary" id="btn-refresh-errors" onclick="loadCheckErrors()">
+                        🔄 Refresh Errors
+                    </button>
+                </div>
+
+                <div class="error-toolbar">
+                    <span class="error-count-badge" id="error-total-badge">
+                        ⚠️ Total Error Records: <strong id="error-total-count">0</strong>
+                    </span>
+
+                    <input type="text" id="error-search-input" class="search-input-box" placeholder="🔍 Search error records..." oninput="handleSearchInput()">
+                </div>
+
+                <!-- Loading Spinner State -->
+                <div id="error-loading-state" class="empty-error-box" style="display:none;">
+                    <span class="empty-error-icon">⏳</span>
+                    <h3>Loading error records...</h3>
+                    <p>Fetching validation error records from database...</p>
+                </div>
+
+                <!-- Disconnected State Box -->
+                <div id="error-disconnected-state" class="empty-error-box">
+                    <span class="empty-error-icon">🔒</span>
+                    <h3>Database Disconnected</h3>
+                    <p>Please connect to the Oracle database using <strong>[ Database Connection ]</strong> in the top navigation bar or left sidebar.</p>
+                    <button type="button" class="glass-btn-primary" style="margin-top:1rem" onclick="openDBModal()">Connect Database</button>
+                </div>
+
+                <!-- Error Table Container -->
+                <div id="error-table-wrapper" class="table-responsive" style="display:none;">
+                    <table class="glass-table" id="check-error-table">
+                        <thead id="error-table-head">
+                            <!-- Dynamic Columns Headers Rendered Here -->
+                        </thead>
+                        <tbody id="error-table-body">
+                            <!-- Dynamic Rows Rendered Here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State (No errors found) -->
+                <div id="error-empty-state" class="empty-error-box" style="display:none;">
+                    <span class="empty-error-icon">🎉</span>
+                    <h3 style="color:var(--success)">No Errors Found</h3>
+                    <p>The error check completed successfully and no error records were returned.</p>
+                    <button type="button" class="glass-btn" style="margin-top:1rem" onclick="loadCheckErrors()">Refresh Errors</button>
+                </div>
+
+                <!-- Pagination Bar -->
+                <div class="pagination-bar" id="error-pagination-bar" style="display:none;margin-top:1rem;display:flex;justify-content:space-between;align-items:center;">
+                    <div id="pagination-info" style="font-size:0.78rem;color:var(--text-muted);">Showing 0–0 of 0 records</div>
+                    <div class="pagination-controls" style="display:flex;align-items:center;gap:0.5rem;">
+                        <button type="button" class="glass-btn" id="btn-page-prev" onclick="changePage(-1)">← Previous</button>
+                        <span id="pagination-page-indicator" style="padding:0 0.5rem;font-size:0.78rem;">Page 1 of 1</span>
+                        <button type="button" class="glass-btn" id="btn-page-next" onclick="changePage(1)">Next →</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals System -->
+    
+    <!-- Update Error Record Modal -->
+    <div id="edit-placeholder-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:500px;width:92%;">
+            <div class="modal-header">
+                <h2>✏️ UPDATE ERROR RECORD</h2>
+                <button type="button" class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+
+            <div id="edit-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="edit-error-form" onsubmit="handleUpdateErrorSubmit(event)">
+                <div class="form-group">
+                    <label for="edit-table-name">Table Name:</label>
+                    <input type="text" id="edit-table-name" class="form-control-readonly" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-reference-no">Reference No:</label>
+                    <input type="text" id="edit-reference-no" class="form-control-readonly" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-remarks">Remarks:</label>
+                    <input type="text" id="edit-remarks" class="form-control-readonly" readonly required>
+                </div>
+
+                <div class="form-group" style="margin-top:1rem">
+                    <label for="edit-actual-reference" style="color:#c084fc;font-weight:700;">Actual Reference: <span style="color:var(--error)">*</span></label>
+                    <input type="text" id="edit-actual-reference" placeholder="Enter Actual Reference..." required style="border-color:rgba(168,85,247,0.6);background:rgba(7,10,20,0.85);color:#ffffff;">
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-submit-update">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DB Connection Modal -->
+    <div id="db-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass db-modal">
+            <div class="modal-header">
+                <h2>🔌 Oracle Database Connection</h2>
+                <button type="button" class="close-btn" onclick="closeDBModal()">&times;</button>
+            </div>
+
+            <div id="db-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="db-connect-form" onsubmit="handleDBConnect(event)">
+                <div class="form-group">
+                    <label for="db-host">Oracle Host</label>
+                    <input type="text" id="db-host" name="host" value="10.5.1.144" placeholder="e.g. 10.5.1.144" required>
+                </div>
+
+                <div class="form-row" style="display:flex;gap:0.75rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label for="db-port">Oracle Port</label>
+                        <input type="number" id="db-port" name="port" value="1540" placeholder="1540" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label for="db-service">Oracle Service</label>
+                        <input type="text" id="db-service" name="service" value="MBLPRIMEODN" placeholder="MBLPRIMEODN" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="db-username">Oracle Username</label>
+                    <input type="text" id="db-username" name="username" value="ultimus" placeholder="Database username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="db-password">Oracle Password</label>
+                    <input type="password" id="db-password" name="password" value="ultimus123" placeholder="••••••••••••" required>
+                </div>
+
+                <div class="modal-actions space-between">
+                    <button type="button" class="glass-btn btn-danger" id="db-disconnect-btn" onclick="handleDBDisconnect()" style="display:none;">
+                        Disconnect
+                    </button>
+                    <div class="right-actions" style="display:flex;gap:0.5rem;margin-left:auto;">
+                        <button type="button" class="glass-btn" onclick="closeDBModal()">Close</button>
+                        <button type="submit" class="glass-btn-primary" id="db-connect-btn">Connect</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Finalize Table Selection Modal -->
+    <div id="finalize-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass finalize-modal">
+            <div class="modal-header">
+                <h2>✨ Finalize Imported Data</h2>
+                <button type="button" class="close-btn" onclick="closeFinalizeModal()">&times;</button>
+            </div>
+
+            <div id="finalize-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="finalize-select-form" onsubmit="handleFinalizeSelect(event)">
+                <div class="form-group">
+                    <label for="finalize-table-select">Select Table</label>
+                    <select id="finalize-table-select" class="form-select" required>
+                        <option value="">[ Select a table ▼ ]</option>
+                        <option value="a1_o1">A1_O1</option>
+                        <option value="arv">ARV</option>
+                        <option value="e2_p2">E2_P2</option>
+                        <option value="c_form">C_FORM</option>
+                        <option value="e3_p3">E3_P3</option>
+                        <option value="bbreturn_manual_tm">BBRETURN_MANUAL_TM</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeFinalizeModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="finalize-ok-btn">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scheduler Modal -->
+    <div id="scheduler-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>📅 SCHEDULER</h2>
+                <button type="button" class="close-btn" onclick="closeSchedulerModal()">&times;</button>
+            </div>
+
+            <div id="scheduler-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="scheduler-form" onsubmit="handleSchedulerSubmit(event)">
+                <div class="form-group">
+                    <label for="scheduler-branch-input">Branch ID (Optional):</label>
+                    <input type="text" id="scheduler-branch-input" class="form-control" placeholder="Leave empty for All Branches">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="scheduler-month-select" style="color:#c084fc;font-weight:700;">Select Month <span style="color:var(--error)">*</span></label>
+                    <select id="scheduler-month-select" class="form-select" required>
+                        <option value="">[ Select Month ▼ ]</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="scheduler-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span style="color:var(--error)">*</span></label>
+                    <input type="number" id="scheduler-year-input" class="form-control" placeholder="e.g. 2026" min="2000" max="2100" required>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeSchedulerModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-scheduler">Run Scheduler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Modal -->
+    <div id="summary-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>📊 SUMMARY</h2>
+                <button type="button" class="close-btn" onclick="closeSummaryModal()">&times;</button>
+            </div>
+
+            <div id="summary-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="summary-form" onsubmit="handleSummarySubmit(event)">
+                <div class="form-group">
+                    <label for="summary-branch-input">Branch ID (Optional):</label>
+                    <input type="text" id="summary-branch-input" class="form-control" placeholder="Leave empty for All Branches">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="summary-month-select" style="color:#c084fc;font-weight:700;">Select Month <span style="color:var(--error)">*</span></label>
+                    <select id="summary-month-select" class="form-select" required>
+                        <option value="">[ Select Month ▼ ]</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="summary-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span style="color:var(--error)">*</span></label>
+                    <input type="number" id="summary-year-input" class="form-control" placeholder="e.g. 2026" min="2000" max="2100" required>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeSummaryModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-summary">Run Summary</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Download Report Modal -->
+    <div id="download-report-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:480px; width:92%;">
+            <div class="modal-header">
+                <h2>📄 DOWNLOAD SCHEDULE REPORT</h2>
+                <button type="button" class="close-btn" onclick="closeReportModal()">&times;</button>
+            </div>
+
+            <div id="report-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="report-form" onsubmit="handleReportSubmit(event)">
+                <div class="form-group">
+                    <label for="report-branch-input">Branch ID (Optional):</label>
+                    <input type="text" id="report-branch-input" class="form-control" placeholder="Leave empty for All Branches">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem;">
+                    <label for="report-month-select" style="color:#c084fc;font-weight:700;">Select Month <span style="color:var(--error)">*</span></label>
+                    <select id="report-month-select" class="form-select" required>
+                        <option value="" disabled selected>-- Select Month --</option>
+                        <option value="1">January (01)</option>
+                        <option value="2">February (02)</option>
+                        <option value="3">March (03)</option>
+                        <option value="4">April (04)</option>
+                        <option value="5">May (05)</option>
+                        <option value="6">June (06)</option>
+                        <option value="7">July (07)</option>
+                        <option value="8">August (08)</option>
+                        <option value="9">September (09)</option>
+                        <option value="10">October (10)</option>
+                        <option value="11">November (11)</option>
+                        <option value="12">December (12)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem;">
+                    <label for="report-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span style="color:var(--error)">*</span></label>
+                    <input type="number" id="report-year-input" class="form-control" placeholder="e.g. 2026" min="2000" max="2100" required>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem;">
+                    <label for="report-schedule-name-select" style="color:#c084fc;font-weight:700;">Select Schedule Name <span style="color:var(--error)">*</span></label>
+                    <select id="report-schedule-name-select" class="form-select" required>
+                        <option value="" disabled selected>-- Select Schedule Name --</option>
+                        <option value="elpaynt">elpaynt</option>
+                        <option value="exprecpt">exprecpt</option>
+                        <option value="invpaynt">invpaynt</option>
+                        <option value="invrecpt">invrecpt</option>
+                        <option value="misc">misc</option>
+                        <option value="imppaynt">imppaynt</option>
+                        <option value="Wagremit">Wagremit</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeReportModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-report">Download Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Process Completion Success Modal -->
+    <div id="process-success-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:460px;width:92%;">
+            <div class="modal-header">
+                <h2 id="process-success-title" style="color:var(--success);margin:0;font-size:1.1rem;">✓ Scheduler Completed Successfully</h2>
+                <button type="button" class="close-btn" onclick="closeProcessSuccessModal()">&times;</button>
+            </div>
+
+            <div style="margin-top:1rem;margin-bottom:1.5rem;font-size:0.88rem;line-height:1.6;">
+                <p><strong>Branch:</strong> <span id="process-success-branch" style="color:#a78bfa;font-weight:700;">All Branches</span></p>
+                <p><strong>Month:</strong> <span id="process-success-month" style="color:#60a5fa;font-weight:700;">January</span></p>
+                <p><strong>Year:</strong> <span id="process-success-year" style="color:#34d399;font-weight:700;">2026</span></p>
+                <p id="process-success-detail" style="margin-top:0.75rem;">The process has completed and changes have been committed successfully.</p>
+            </div>
+
+            <div class="modal-actions" style="justify-content:flex-end">
+                <button type="button" class="glass-btn-primary" onclick="closeProcessSuccessModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/import.js?v=80"></script>
+    <script src="/static/js/check_error.js?v=51"></script>
+    <script src="/static/js/process_manager.js?v=120"></script>
+    
+    <canvas id="cloud-canvas"></canvas>
+    <script>
+    (function() {
+        const canvas = document.getElementById('cloud-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, t = 0;
+        const nodes = [];
+        const colors = [[126,34,206],[168,85,247],[59,130,246],[107,33,168],[30,58,138]];
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+        resize(); window.addEventListener('resize', resize);
+        for (let i = 0; i < 7; i++) { nodes.push({ x: Math.random()*2-1, y: Math.random()*2-1, vx:(Math.random()-0.5)*0.0006, vy:(Math.random()-0.5)*0.0006, r:0.38+Math.random()*0.32, color:colors[i%colors.length], phase:Math.random()*Math.PI*2 }); }
+        function draw() {
+            ctx.clearRect(0,0,W,H); const mx=W>H?W:H;
+            for (const n of nodes) {
+                n.x+=n.vx; n.y+=n.vy;
+                if(n.x<-0.5||n.x>1.5)n.vx*=-1; if(n.y<-0.5||n.y>1.5)n.vy*=-1;
+                const pulse=1+0.06*Math.sin(t*0.4+n.phase); const rPx=n.r*mx*pulse;
+                const cx=n.x*W; const cy=n.y*H; const [r,g,b]=n.color;
+                const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,rPx);
+                grad.addColorStop(0,`rgba(${r},${g},${b},0.22)`); grad.addColorStop(0.5,`rgba(${r},${g},${b},0.09)`); grad.addColorStop(1,`rgba(${r},${g},${b},0)`);
+                ctx.beginPath(); ctx.arc(cx,cy,rPx,0,Math.PI*2); ctx.fillStyle=grad; ctx.fill();
+            }
+            t+=1; requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+    </script>
+</body>
+</html>

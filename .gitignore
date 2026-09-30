@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+logs/failed/*.csv
+uploads/temp/*.csv
+venv/
+*.tar.gz
+scratch/
+BK/

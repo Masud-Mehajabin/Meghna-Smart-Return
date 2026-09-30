@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meghna Smart Return — Bangladesh Bank Return Automation Platform</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon.png?v=1">
+    <link rel="stylesheet" href="/static/css/style.css?v=844">
+</head>
+
+<body>
+    <!-- Full-Screen Interactive Umbrella & Pull-Rope Login Overlay -->
+    <div id="login-screen-overlay" class="login-screen-overlay">
+        <div class="login-screen-background">
+            <div class="bg-glow-orb orb-1"></div>
+            <div class="bg-glow-orb orb-2"></div>
+        </div>
+
+        <!-- Stage 1: Welcome Screen with Umbrella & Hanging Pull Rope -->
+        <div class="login-welcome-stage" id="login-welcome-stage">
+
+            <!-- Bank Brand Logo & Title Header -->
+            <div class="login-brand-header">
+                <div class="login-logo-wrap">
+                    <img src="/static/images/meghna_bank_logo.jpg?v=2" alt="Meghna Bank Logo" class="login-logo-img">
+                </div>
+                <h1 class="login-app-name">MEGHNA SMART RETURN</h1>
+                <p class="login-app-subtitle">AUTOMATE • VALIDATE • MONITOR • REPORT</p>
+            </div>
+
+            <!-- Elegant Umbrella & Pull-Rope Interactive Hero Container -->
+            <div class="umbrella-hero-container" id="umbrella-hero-container"
+                title="Drag J-Hook Handle Downward to Access System">
+
+                <!-- SVG Vector Umbrella & Pendulum Handle Illustration -->
+                <div class="umbrella-illustration-wrap" id="umbrella-illustration-wrap">
+                    <svg class="umbrella-svg" viewBox="0 0 320 230" id="umbrella-svg">
+                        <defs>
+                            <linearGradient id="umbrellaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#a855f7" />
+                                <stop offset="50%" stop-color="#6b21a8" />
+                                <stop offset="100%" stop-color="#3b0764" />
+                            </linearGradient>
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f59e0b" />
+                                <stop offset="50%" stop-color="#fbbf24" />
+                                <stop offset="100%" stop-color="#d97706" />
+                            </linearGradient>
+                            <filter id="purpleGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="8" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                            <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+
+                        <!-- Umbrella Top Spire Cap -->
+                        <path d="M 160,22 L 160,10" stroke="#fbbf24" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="160" cy="9" r="3.5" fill="#fbbf24" />
+
+                        <!-- Umbrella Canopy Main Shell -->
+                        <path class="umbrella-canopy-path" id="umbrella-canopy-path"
+                            d="M 25,120 Q 160,18 295,120 Q 240,108 185,120 Q 160,110 135,120 Q 80,108 25,120 Z"
+                            fill="url(#umbrellaGrad)" stroke="rgba(168, 85, 247, 0.6)" stroke-width="2.5"
+                            filter="url(#purpleGlow)" />
+
+                        <!-- Canopy Rib Guidelines -->
+                        <path d="M 160,22 Q 135,70 135,120" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5"
+                            fill="none" />
+                        <path d="M 160,22 Q 185,70 185,120" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5"
+                            fill="none" />
+                        <path d="M 160,22 Q 80,68 25,120" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5"
+                            fill="none" />
+                        <path d="M 160,22 Q 240,68 295,120" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5"
+                            fill="none" />
+
+                        <!-- Unified Pendulum Group: Connecting Shaft Line & J-Hook Handle -->
+                        <g class="pendulum-swing-group" id="pendulum-swing-group">
+                            <!-- Outer Glow Backing for Connecting Rope Shaft Line -->
+                            <line x1="160" y1="110" x2="160" y2="188" stroke="#f59e0b" stroke-width="6" opacity="0.45"
+                                stroke-linecap="round" />
+
+                            <!-- Bright Gold Connecting Shaft Line between Umbrella Canopy and J-Hook Handle -->
+                            <line x1="160" y1="110" x2="160" y2="188" stroke="#fbbf24" stroke-width="3.5"
+                                stroke-linecap="round" filter="url(#goldGlow)" />
+
+                            <!-- Curved J-Hook Handle Base -->
+                            <path d="M 160,188 C 160,214 138,214 138,196" stroke="#fbbf24" stroke-width="4.5"
+                                fill="none" stroke-linecap="round" filter="url(#goldGlow)" />
+                        </g>
+                    </svg>
+                </div>
+
+            </div>
+
+            <!-- Welcome Footer Tagline -->
+            <div class="login-welcome-footer">
+                <span class="footer-feature">Secure</span> •
+                <span class="footer-feature">Accurate</span> •
+                <span class="footer-feature">Automated</span>
+            </div>
+
+        </div>
+
+        <!-- Stage 2: Secure Login Form Card (Initially Hidden) -->
+        <div class="login-card-container" id="login-card-container" style="display: none;">
+            <div class="login-glass-card">
+
+                <div class="login-card-header">
+                    <button type="button" class="login-back-btn" onclick="resetLoginOverlayToWelcome()"
+                        title="Return to Umbrella Welcome Screen">
+                        ← Back
+                    </button>
+                    <div class="login-card-badge">SECURE PORTAL</div>
+                    <h2 class="login-card-title">Welcome Back</h2>
+                    <p class="login-card-subtitle">Secure access to <strong>Meghna Smart Return</strong></p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="login-form" onsubmit="handleLoginSubmit(event)">
+
+                    <div class="login-input-group">
+                        <label for="login-username" class="login-input-label">Username</label>
+                        <div class="input-field-wrap">
+                            <span class="field-icon">👤</span>
+                            <input type="text" id="login-username" class="login-input" value="admin"
+                                placeholder="Enter Username" required autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="login-input-group">
+                        <label for="login-password" class="login-input-label">Password</label>
+                        <div class="input-field-wrap">
+                            <span class="field-icon">🔑</span>
+                            <input type="password" id="login-password" class="login-input" value="admin"
+                                placeholder="Enter Password" required autocomplete="current-password">
+                            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility()"
+                                title="Show/Hide Password">
+                                <span id="password-toggle-icon">👁️</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Login Error / Status Alert -->
+                    <div id="login-alert-box" class="login-alert-box" style="display: none;"></div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="btn-login-submit" class="login-submit-btn">
+                        <span id="login-btn-text">Secure Sign In →</span>
+                    </button>
+                </form>
+
+                <div class="login-card-footer">
+                    <span>🔒 Authorized Users Only</span>
+                    <span class="system-ver">v1.0 Enterprise</span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Top Enterprise Banking Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <button type="button" class="sidebar-toggle-btn" onclick="toggleSidebar()"
+                title="Toggle Sidebar Navigation">
+                ☰
+            </button>
+            <div class="brand-section" onclick="showHomeView()">
+                <div class="brand-logo-wrap">
+                    <img src="/static/images/meghna_bank_logo.jpg?v=2" alt="Meghna Bank" class="brand-logo-img">
+                </div>
+                <div class="brand-titles">
+                    <span class="brand-name">MEGHNA SMART RETURN</span>
+                    <span class="brand-tagline">Automate • Validate • Monitor • Report</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- Database Status Indicator Badge -->
+            <div class="db-status-badge disconnected" id="nav-db-badge" onclick="openDBModal()" style="cursor:pointer;"
+                title="Click to open DB Connection modal">
+                <span class="status-dot"></span>
+                <span id="nav-db-status-text">Database Disconnected</span>
+            </div>
+
+            <!-- Notifications -->
+            <div class="header-icon-btn" title="System Notifications">
+                🔔
+                <span class="badge-dot"></span>
+            </div>
+
+            <!-- User Profile Badge -->
+            <div class="user-profile-badge" id="user-profile-badge">
+                <span class="avatar" id="header-user-avatar">AD</span>
+                <div class="user-meta">
+                    <span class="user-name" id="header-user-name">Admin</span>
+                    <span class="user-role" id="header-user-role">Internal Admin</span>
+                </div>
+                <button type="button" class="header-signout-btn" id="btn-header-signout" onclick="handleLogoutClick()"
+                    title="Sign Out of Session">
+                    <span>Sign Out</span> ⎋
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Enterprise 3-Part Layout Container -->
+    <div class="app-layout">
+
+        <!-- Collapsible Left Sidebar Navigation -->
+        <aside class="app-sidebar" id="app-sidebar">
+
+            <!-- Main Navigation Group -->
+            <div class="sidebar-nav-group">
+                <span class="sidebar-section-title">MAIN NAVIGATION</span>
+
+                <button type="button" class="sidebar-btn active" id="nav-tab-home" onclick="showHomeView()"
+                    title="Dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Dashboard</span>
+                </button>
+
+                <button type="button" class="sidebar-btn" id="nav-tab-validation" onclick="showValidationView()"
+                    title="Upload &amp; Validation">
+                    <span class="nav-icon">📤</span>
+                    <span class="nav-text">Upload &amp; Validation</span>
+                </button>
+
+                <button type="button" class="sidebar-btn" id="nav-tab-check-error" onclick="showCheckErrorView(event)"
+                    title="Error Summary">
+                    <span class="nav-icon">⚠️</span>
+                    <span class="nav-text">Error Summary</span>
+                </button>
+
+                <button type="button" class="sidebar-btn" id="nav-tab-download-report" onclick="openReportModal()"
+                    title="Download Reports">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Download Reports</span>
+                </button>
+            </div>
+
+            <!-- Process Monitoring Section -->
+            <div class="sidebar-nav-group">
+                <span class="sidebar-section-title">PROCESS MONITORING</span>
+
+                <div class="nav-dropdown nav-scheduler-summary-dropdown">
+                    <button type="button" class="sidebar-btn" id="nav-tab-scheduler-summary"
+                        onclick="toggleSchedulerSummaryDropdown(event)"
+                        title="Process Monitoring (Scheduler &amp; Summary)">
+                        <span class="nav-icon">🗓️</span>
+                        <span class="nav-text">Process Monitoring</span>
+                        <span class="chevron-icon" style="margin-left:auto;font-size:0.7rem;">▼</span>
+                    </button>
+                    <div class="dropdown-menu sidebar-submenu">
+                        <button type="button" class="dropdown-item" onclick="handleSchedulerItemClick(event)"
+                            title="Run Scheduler">
+                            <span>📅</span> <span>Scheduler</span>
+                        </button>
+                        <button type="button" class="dropdown-item" onclick="handleSummaryItemClick(event)"
+                            title="Run Summary">
+                            <span>📊</span> <span>Summary</span>
+                        </button>
+                        <!-- Reconciliation: hidden until scheduler_completed && summary_completed -->
+                        <button type="button" class="dropdown-item recon-hidden" id="nav-reconciliation-item"
+                            onclick="handleReconciliationItemClick(event)" title="Run Reconciliation Cross-Check">
+                            <span>🔁</span> <span>Reconciliation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Section -->
+            <div class="sidebar-nav-group">
+                <span class="sidebar-section-title">MONITORING</span>
+
+                <a href="/logs" class="sidebar-btn" id="nav-tab-logs" title="Activity &amp; Upload Logs">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Activity &amp; Upload Logs</span>
+                </a>
+            </div>
+
+        </aside>
+
+        <!-- Main Workspace Content Area -->
+        <main class="app-main-content">
+
+            <!-- VIEW 1: Dashboard View -->
+            <section id="home-view" class="view-section">
+
+                <!-- Welcome Hero & Action Cards Panel -->
+                <div class="welcome-card">
+                    <div class="welcome-header">
+                        <div class="greeting-ticker-track">
+                            <h2>Good Day, Operations Team 👋</h2>
+                        </div>
+                    </div>
+
+                    <!-- Enterprise Circular Workflow Orbit Panel -->
+                    <div class="workflow-carousel-container circular-mode orbit-emerging"
+                        id="workflow-carousel-container">
+                        <div class="workflow-carousel-header">
+                            <div class="workflow-title-wrap">
+                                <span class="workflow-badge">👁️ Meghna Smart Return Eye</span>
+                            </div>
+                            <div class="workflow-carousel-controls">
+                                <span class="workflow-step-indicator" id="workflow-step-indicator">Step 1 of 5</span>
+                                <button type="button" class="carousel-nav-btn prev" id="wf-carousel-prev"
+                                    onclick="rotateCircularWorkflow(-1)" title="Rotate Counter-Clockwise">↺</button>
+                                <button type="button" class="carousel-nav-btn next" id="wf-carousel-next"
+                                    onclick="rotateCircularWorkflow(1)" title="Rotate Clockwise">↻</button>
+                                <button type="button" class="carousel-nav-btn toggle-orbit" id="wf-orbit-toggle"
+                                    onclick="toggleOrbitAutoRotate()" title="Pause / Resume Rotation">⏸</button>
+                            </div>
+                        </div>
+
+                        <!-- CIRCULAR FERRIS-WHEEL STAGE -->
+                        <div class="circular-orbit-stage" id="circular-orbit-stage">
+
+                            <!-- SVG Orbit Path Ring -->
+                            <svg class="orbit-ring-svg" viewBox="0 0 680 680">
+                                <circle cx="340" cy="340" r="255" class="orbit-path-bg" />
+                                <circle cx="340" cy="340" r="255" class="orbit-path-glow" />
+                            </svg>
+
+                            <!-- Center Enterprise Hub Node -->
+                            <div class="orbit-center-hub"
+                                onclick="autoFocusActiveWorkflowStep(window.currentActiveStepIndex || 1)"
+                                title="Click to focus active step">
+                                <div class="hub-icon">🏦</div>
+                                <div class="hub-brand">MEGHNA SMART RETURN</div>
+                                <div class="hub-status-text" id="hub-status-text">Workflow Tracker Active</div>
+                            </div>
+
+                            <!-- Revolving Wheel Container -->
+                            <div class="circular-orbit-wheel" id="circular-orbit-wheel" style="--wheel-rotation: 0deg;">
+
+                                <!-- Cabin Node 1 (0 deg - Top) -->
+                                <div class="orbit-cabin-node node-1" data-step="1">
+                                    <div class="workflow-card active" id="wf-card-step-1" data-step="1"
+                                        onclick="handleWorkflowCardClick('upload_validation')">
+                                        <div class="wf-card-header">
+                                            <span class="wf-step-num">STEP 01</span>
+                                            <span class="wf-status-badge active" id="wf-badge-step-1">● Active</span>
+                                        </div>
+                                        <div class="wf-card-body">
+                                            <div class="wf-card-icon">📤</div>
+                                            <h4 class="wf-card-title">Upload &amp; Validation</h4>
+                                            <p class="wf-card-desc">Process, clean &amp; insert 6 predefined BB Return
+                                                CSVs.</p>
+                                        </div>
+                                        <div class="wf-card-footer">
+                                            <span class="wf-action-text">Start Upload</span>
+                                            <span class="wf-action-arrow">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cabin Node 2 (72 deg) -->
+                                <div class="orbit-cabin-node node-2" data-step="2">
+                                    <div class="workflow-card active" id="wf-card-step-2" data-step="2"
+                                        onclick="handleWorkflowCardClick('error_summary')">
+                                        <div class="wf-card-header">
+                                            <span class="wf-step-num">STEP 02</span>
+                                            <span class="wf-status-badge active" id="wf-badge-step-2">● Active</span>
+                                        </div>
+                                        <div class="wf-card-body">
+                                            <div class="wf-card-icon">⚠️</div>
+                                            <h4 class="wf-card-title">Error Summary</h4>
+                                            <p class="wf-card-desc">Inspect, search &amp; resolve invalid format or
+                                                duplicate entries.</p>
+                                        </div>
+                                        <div class="wf-card-footer">
+                                            <span class="wf-action-text">Review Errors</span>
+                                            <span class="wf-action-arrow">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cabin Node 3 (144 deg) -->
+                                <div class="orbit-cabin-node node-3" data-step="3">
+                                    <div class="workflow-card active" id="wf-card-step-3" data-step="3"
+                                        onclick="handleWorkflowCardClick('process_monitoring')">
+                                        <div class="wf-card-header">
+                                            <span class="wf-step-num">STEP 03</span>
+                                            <span class="wf-status-badge active" id="wf-badge-step-3">● Ready</span>
+                                        </div>
+                                        <div class="wf-card-body">
+                                            <div class="wf-card-icon">🗓️</div>
+                                            <h4 class="wf-card-title">Process Monitoring</h4>
+                                            <p class="wf-card-desc">Execute return schedulers and generate monthly
+                                                summaries.</p>
+                                        </div>
+                                        <div class="wf-card-footer">
+                                            <span class="wf-action-text">Run Processes</span>
+                                            <span class="wf-action-arrow">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cabin Node 4 (216 deg) -->
+                                <div class="orbit-cabin-node node-4" data-step="4">
+                                    <div class="workflow-card active" id="wf-card-step-4" data-step="4"
+                                        onclick="handleWorkflowCardClick('download_reports')">
+                                        <div class="wf-card-header">
+                                            <span class="wf-step-num">STEP 04</span>
+                                            <span class="wf-status-badge active" id="wf-badge-step-4">● Ready</span>
+                                        </div>
+                                        <div class="wf-card-body">
+                                            <div class="wf-card-icon">📄</div>
+                                            <h4 class="wf-card-title">Download Reports</h4>
+                                            <p class="wf-card-desc">Generate and export TXT return reports at any time.
+                                            </p>
+                                        </div>
+                                        <div class="wf-card-footer">
+                                            <span class="wf-action-text">Export TXT</span>
+                                            <span class="wf-action-arrow">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cabin Node 5 (288 deg) -->
+                                <div class="orbit-cabin-node node-5" data-step="5">
+                                    <div class="workflow-card" id="wf-card-step-5" data-step="5"
+                                        onclick="handleWorkflowCardClick('activity_logs')">
+                                        <div class="wf-card-header">
+                                            <span class="wf-step-num">STEP 05</span>
+                                            <span class="wf-status-badge active" id="wf-badge-step-5">● Active</span>
+                                        </div>
+                                        <div class="wf-card-body">
+                                            <div class="wf-card-icon">📋</div>
+                                            <h4 class="wf-card-title">Activity Logs</h4>
+                                            <p class="wf-card-desc">Full audit trail of CSV imports, errors &amp;
+                                                processing history.</p>
+                                        </div>
+                                        <div class="wf-card-footer">
+                                            <span class="wf-action-text">View History</span>
+                                            <span class="wf-action-arrow">→</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+            </section>
+
+            <!-- VIEW 2: RETURN DATA IMPORT CENTER (CSV Validation & Import Module) -->
+            <section id="validation-view" class="view-section" style="display: none;">
+
+                <!-- RETURN DATA IMPORT CENTER HEADER & SUMMARY CARDS -->
+                <div class="import-center-header">
+                    <div class="import-title-wrap">
+                        <h1 class="import-main-title">Upload &amp; Validation Process</h1>
+                    </div>
+
+                    <!-- 3 Compact Summary KPI Cards -->
+                    <div class="import-kpi-grid">
+                        <div class="kpi-card kpi-blue">
+                            <div class="kpi-icon-wrap">📦</div>
+                            <div class="kpi-info">
+                                <span class="kpi-value">6</span>
+                                <span class="kpi-label">CSV Modules</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card kpi-purple">
+                            <div class="kpi-icon-wrap">📊</div>
+                            <div class="kpi-info">
+                                <span class="kpi-value" id="kpi-total-records">0</span>
+                                <span class="kpi-label">Total Records</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card kpi-emerald">
+                            <div class="kpi-icon-wrap">🎯</div>
+                            <div class="kpi-info">
+                                <span class="kpi-value" id="kpi-total-errors">0</span>
+                                <span class="kpi-label">Errors</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Disconnected Warning Banner -->
+                <div id="db-access-banner" class="glass-banner warning">
+                    <span class="banner-icon">🔒</span>
+                    <div class="banner-text">
+                        <strong>Oracle Database Disconnected</strong> — Please click <button type="button"
+                            class="inline-link-btn" onclick="openDBModal()">[ Database Connection ]</button> in the
+                        navigation bar to establish connection before validating or importing CSV files.
+                    </div>
+                </div>
+
+                <!-- 6 Predefined CSV Import Cards Grid (3 Columns x 2 Rows) -->
+                <div class="csv-cards-grid" id="csv-cards-container">
+
+                    <!-- 1. TRIPLICATE LIST -->
+                    <div class="csv-module-card accent-blue" id="card-triplicate">
+                        <div class="module-card-header">
+                            <div class="module-card-title-group">
+                                <div class="module-accent-tag">A1_O1</div>
+                                <h3 class="module-card-title">TRIPLICATE LIST</h3>
+                            </div>
+                            <span class="status-badge badge-ready" id="badge-triplicate">READY</span>
+                        </div>
+
+                        <div class="module-meta-row">
+                            <span class="meta-pill"><span class="pill-icon">📁</span> Expected: <strong>triplicate_list.csv</strong></span>
+                            <span class="meta-pill"><span class="pill-icon">🗄️</span> Target Table: <strong>A1_O1</strong></span>
+                        </div>
+
+                        <form class="upload-form" data-key="triplicate" data-expected="triplicate_list.csv">
+                            <div class="drag-drop-zone" id="dropzone-triplicate">
+                                <div class="drop-icon">⬆️</div>
+                                <div class="drop-text-primary">Drop CSV file here or <span class="browse-link">Browse File</span></div>
+                                <div class="drop-text-secondary">Expected: <code>triplicate_list.csv</code></div>
+                                <input type="file" id="input-triplicate" accept=".csv" class="native-file-input" required disabled>
+                            </div>
+
+                            <div class="file-details-pill" id="details-triplicate" style="display:none;">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info-col">
+                                    <span class="file-name-txt" id="fname-triplicate">triplicate_list.csv</span>
+                                    <span class="file-meta-txt" id="fmeta-triplicate">Calculating file details…</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" onclick="clearSelectedFile('triplicate')" title="Remove file">&times;</button>
+                            </div>
+
+                            <button type="submit" class="validate-import-btn" id="btn-triplicate" disabled>
+                                <span class="btn-icon">⚡</span> <span class="btn-text">Validate &amp; Import</span>
+                            </button>
+                        </form>
+
+                        <div class="progress-section" id="prog-triplicate" style="display:none">
+                            <div class="status-row">
+                                <span class="status-label" id="status-triplicate">Waiting</span>
+                                <span class="pct-label" id="perc-triplicate">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="fill-triplicate"></div>
+                            </div>
+                            <div class="counter-row">Processed: <strong id="counter-triplicate">0 / 0</strong></div>
+                            <div class="stats-pills-grid" id="stats-triplicate">
+                                <div class="stat-mini-pill inserted">Inserted: <strong id="stat-inserted-triplicate">0</strong></div>
+                                <div class="stat-mini-pill duplicates">Duplicates: <strong id="stat-dup-triplicate">0</strong></div>
+                                <div class="stat-mini-pill failed">Failed: <strong id="stat-fail-triplicate">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. ONLINE REPORTED ARV LIST -->
+                    <div class="csv-module-card accent-cyan" id="card-arv">
+                        <div class="module-card-header">
+                            <div class="module-card-title-group">
+                                <div class="module-accent-tag">ARV</div>
+                                <h3 class="module-card-title">ONLINE REPORTED ARV LIST</h3>
+                            </div>
+                            <span class="status-badge badge-ready" id="badge-arv">READY</span>
+                        </div>
+
+                        <div class="module-meta-row">
+                            <span class="meta-pill"><span class="pill-icon">📁</span> Expected: <strong>online_reported_arv_list.csv</strong></span>
+                            <span class="meta-pill"><span class="pill-icon">🗄️</span> Target Table: <strong>ARV</strong></span>
+                        </div>
+
+                        <form class="upload-form" data-key="arv" data-expected="online_reported_arv_list.csv">
+                            <div class="drag-drop-zone" id="dropzone-arv">
+                                <div class="drop-icon">⬆️</div>
+                                <div class="drop-text-primary">Drop CSV file here or <span class="browse-link">Browse File</span></div>
+                                <div class="drop-text-secondary">Expected: <code>online_reported_arv_list.csv</code></div>
+                                <input type="file" id="input-arv" accept=".csv" class="native-file-input" required disabled>
+                            </div>
+
+                            <div class="file-details-pill" id="details-arv" style="display:none;">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info-col">
+                                    <span class="file-name-txt" id="fname-arv">online_reported_arv_list.csv</span>
+                                    <span class="file-meta-txt" id="fmeta-arv">Calculating file details…</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" onclick="clearSelectedFile('arv')" title="Remove file">&times;</button>
+                            </div>
+
+                            <button type="submit" class="validate-import-btn" id="btn-arv" disabled>
+                                <span class="btn-icon">⚡</span> <span class="btn-text">Validate &amp; Import</span>
+                            </button>
+                        </form>
+
+                        <div class="progress-section" id="prog-arv" style="display:none">
+                            <div class="status-row">
+                                <span class="status-label" id="status-arv">Waiting</span>
+                                <span class="pct-label" id="perc-arv">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="fill-arv"></div>
+                            </div>
+                            <div class="counter-row">Processed: <strong id="counter-arv">0 / 0</strong></div>
+                            <div class="stats-pills-grid" id="stats-arv">
+                                <div class="stat-mini-pill inserted">Inserted: <strong id="stat-inserted-arv">0</strong></div>
+                                <div class="stat-mini-pill duplicates">Duplicates: <strong id="stat-dup-arv">0</strong></div>
+                                <div class="stat-mini-pill failed">Failed: <strong id="stat-fail-arv">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. E2-P2 RIT IMP REPORT -->
+                    <div class="csv-module-card accent-purple" id="card-e2p2">
+                        <div class="module-card-header">
+                            <div class="module-card-title-group">
+                                <div class="module-accent-tag">E2_P2</div>
+                                <h3 class="module-card-title">E2-P2 RIT IMP REPORT</h3>
+                            </div>
+                            <span class="status-badge badge-ready" id="badge-e2p2">READY</span>
+                        </div>
+
+                        <div class="module-meta-row">
+                            <span class="meta-pill"><span class="pill-icon">📁</span> Expected: <strong>e2-p2_rit_imp_report.csv</strong></span>
+                            <span class="meta-pill"><span class="pill-icon">🗄️</span> Target Table: <strong>E2_P2</strong></span>
+                        </div>
+
+                        <form class="upload-form" data-key="e2p2" data-expected="e2-p2_rit_imp_report.csv">
+                            <div class="drag-drop-zone" id="dropzone-e2p2">
+                                <div class="drop-icon">⬆️</div>
+                                <div class="drop-text-primary">Drop CSV file here or <span class="browse-link">Browse File</span></div>
+                                <div class="drop-text-secondary">Expected: <code>e2-p2_rit_imp_report.csv</code></div>
+                                <input type="file" id="input-e2p2" accept=".csv" class="native-file-input" required disabled>
+                            </div>
+
+                            <div class="file-details-pill" id="details-e2p2" style="display:none;">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info-col">
+                                    <span class="file-name-txt" id="fname-e2p2">e2-p2_rit_imp_report.csv</span>
+                                    <span class="file-meta-txt" id="fmeta-e2p2">Calculating file details…</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" onclick="clearSelectedFile('e2p2')" title="Remove file">&times;</button>
+                            </div>
+
+                            <button type="submit" class="validate-import-btn" id="btn-e2p2" disabled>
+                                <span class="btn-icon">⚡</span> <span class="btn-text">Validate &amp; Import</span>
+                            </button>
+                        </form>
+
+                        <div class="progress-section" id="prog-e2p2" style="display:none">
+                            <div class="status-row">
+                                <span class="status-label" id="status-e2p2">Waiting</span>
+                                <span class="pct-label" id="perc-e2p2">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="fill-e2p2"></div>
+                            </div>
+                            <div class="counter-row">Processed: <strong id="counter-e2p2">0 / 0</strong></div>
+                            <div class="stats-pills-grid" id="stats-e2p2">
+                                <div class="stat-mini-pill inserted">Inserted: <strong id="stat-inserted-e2p2">0</strong></div>
+                                <div class="stat-mini-pill duplicates">Duplicates: <strong id="stat-dup-e2p2">0</strong></div>
+                                <div class="stat-mini-pill failed">Failed: <strong id="stat-fail-e2p2">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. C FORM SUMMARY -->
+                    <div class="csv-module-card accent-emerald" id="card-cform">
+                        <div class="module-card-header">
+                            <div class="module-card-title-group">
+                                <div class="module-accent-tag">C_FORM</div>
+                                <h3 class="module-card-title">C FORM SUMMARY</h3>
+                            </div>
+                            <span class="status-badge badge-ready" id="badge-cform">READY</span>
+                        </div>
+
+                        <div class="module-meta-row">
+                            <span class="meta-pill"><span class="pill-icon">📁</span> Expected: <strong>c_form_summary.csv</strong></span>
+                            <span class="meta-pill"><span class="pill-icon">🗄️</span> Target Table: <strong>C_FORM</strong></span>
+                        </div>
+
+                        <form class="upload-form" data-key="cform" data-expected="c_form_summary.csv">
+                            <div class="drag-drop-zone" id="dropzone-cform">
+                                <div class="drop-icon">⬆️</div>
+                                <div class="drop-text-primary">Drop CSV file here or <span class="browse-link">Browse File</span></div>
+                                <div class="drop-text-secondary">Expected: <code>c_form_summary.csv</code></div>
+                                <input type="file" id="input-cform" accept=".csv" class="native-file-input" required disabled>
+                            </div>
+
+                            <div class="file-details-pill" id="details-cform" style="display:none;">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info-col">
+                                    <span class="file-name-txt" id="fname-cform">c_form_summary.csv</span>
+                                    <span class="file-meta-txt" id="fmeta-cform">Calculating file details…</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" onclick="clearSelectedFile('cform')" title="Remove file">&times;</button>
+                            </div>
+
+                            <button type="submit" class="validate-import-btn" id="btn-cform" disabled>
+                                <span class="btn-icon">⚡</span> <span class="btn-text">Validate &amp; Import</span>
+                            </button>
+                        </form>
+
+                        <div class="progress-section" id="prog-cform" style="display:none">
+                            <div class="status-row">
+                                <span class="status-label" id="status-cform">Waiting</span>
+                                <span class="pct-label" id="perc-cform">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="fill-cform"></div>
+                            </div>
+                            <div class="counter-row">Processed: <strong id="counter-cform">0 / 0</strong></div>
+                            <div class="stats-pills-grid" id="stats-cform">
+                                <div class="stat-mini-pill inserted">Inserted: <strong id="stat-inserted-cform">0</strong></div>
+                                <div class="stat-mini-pill duplicates">Duplicates: <strong id="stat-dup-cform">0</strong></div>
+                                <div class="stat-mini-pill failed">Failed: <strong id="stat-fail-cform">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. REPORT TM MAIN FOR BANK HO -->
+                    <div class="csv-module-card accent-magenta" id="card-tm">
+                        <div class="module-card-header">
+                            <div class="module-card-title-group">
+                                <div class="module-accent-tag">E3_P3</div>
+                                <h3 class="module-card-title">REPORT TM MAIN FOR BANK HO</h3>
+                            </div>
+                            <span class="status-badge badge-ready" id="badge-tm">READY</span>
+                        </div>
+
+                        <div class="module-meta-row">
+                            <span class="meta-pill"><span class="pill-icon">📁</span> Expected: <strong>report_tm_main_for_bank_ho.csv</strong></span>
+                            <span class="meta-pill"><span class="pill-icon">🗄️</span> Target Table: <strong>E3_P3</strong></span>
+                        </div>
+
+                        <form class="upload-form" data-key="tm" data-expected="report_tm_main_for_bank_ho.csv">
+                            <div class="drag-drop-zone" id="dropzone-tm">
+                                <div class="drop-icon">⬆️</div>
+                                <div class="drop-text-primary">Drop CSV file here or <span class="browse-link">Browse File</span></div>
+                                <div class="drop-text-secondary">Expected: <code>report_tm_main_for_bank_ho.csv</code></div>
+                                <input type="file" id="input-tm" accept=".csv" class="native-file-input" required disabled>
+                            </div>
+
+                            <div class="file-details-pill" id="details-tm" style="display:none;">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info-col">
+                                    <span class="file-name-txt" id="fname-tm">report_tm_main_for_bank_ho.csv</span>
+                                    <span class="file-meta-txt" id="fmeta-tm">Calculating file details…</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" onclick="clearSelectedFile('tm')" title="Remove file">&times;</button>
+                            </div>
+
+                            <button type="submit" class="validate-import-btn" id="btn-tm" disabled>
+                                <span class="btn-icon">⚡</span> <span class="btn-text">Validate &amp; Import</span>
+                            </button>
+                        </form>
+
+                        <div class="progress-section" id="prog-tm" style="display:none">
+                            <div class="status-row">
+                                <span class="status-label" id="status-tm">Waiting</span>
+                                <span class="pct-label" id="perc-tm">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="fill-tm"></div>
+                            </div>
+                            <div class="counter-row">Processed: <strong id="counter-tm">0 / 0</strong></div>
+                            <div class="stats-pills-grid" id="stats-tm">
+                                <div class="stat-mini-pill inserted">Inserted: <strong id="stat-inserted-tm">0</strong></div>
+                                <div class="stat-mini-pill duplicates">Duplicates: <strong id="stat-dup-tm">0</strong></div>
+                                <div class="stat-mini-pill failed">Failed: <strong id="stat-fail-tm">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. DETAILS TM DATA FROM IMP ENTRY -->
+                    <div class="csv-module-card accent-orange" id="card-details">
+                        <div class="module-card-header">
+                            <div class="module-card-title-group">
+                                <div class="module-accent-tag">BBRETURN_MANUAL_TRADE</div>
+                                <h3 class="module-card-title">DETAILS TM DATA FROM IMP ENTRY</h3>
+                            </div>
+                            <span class="status-badge badge-ready" id="badge-details">READY</span>
+                        </div>
+
+                        <div class="module-meta-row">
+                            <span class="meta-pill"><span class="pill-icon">📁</span> Expected: <strong>details_tm_data_from_imp_entry_(tm_date_wise).csv</strong></span>
+                            <span class="meta-pill"><span class="pill-icon">🗄️</span> Target Table: <strong>BBRETURN_MANUAL_TRADE</strong></span>
+                        </div>
+
+                        <form class="upload-form" data-key="details"
+                            data-expected="details_tm_data_from_imp_entry_(tm_date_wise).csv">
+                            <div class="drag-drop-zone" id="dropzone-details">
+                                <div class="drop-icon">⬆️</div>
+                                <div class="drop-text-primary">Drop CSV file here or <span class="browse-link">Browse File</span></div>
+                                <div class="drop-text-secondary">Expected: <code>details_tm_data_from_imp_entry_(tm_date_wise).csv</code></div>
+                                <input type="file" id="input-details" accept=".csv" class="native-file-input" required disabled>
+                            </div>
+
+                            <div class="file-details-pill" id="details-details" style="display:none;">
+                                <div class="file-icon">📄</div>
+                                <div class="file-info-col">
+                                    <span class="file-name-txt" id="fname-details">details_tm_data_from_imp_entry_(tm_date_wise).csv</span>
+                                    <span class="file-meta-txt" id="fmeta-details">Calculating file details…</span>
+                                </div>
+                                <button type="button" class="file-remove-btn" onclick="clearSelectedFile('details')" title="Remove file">&times;</button>
+                            </div>
+
+                            <button type="submit" class="validate-import-btn" id="btn-details" disabled>
+                                <span class="btn-icon">⚡</span> <span class="btn-text">Validate &amp; Import</span>
+                            </button>
+                        </form>
+
+                        <div class="progress-section" id="prog-details" style="display:none">
+                            <div class="status-row">
+                                <span class="status-label" id="status-details">Waiting</span>
+                                <span class="pct-label" id="perc-details">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="fill-details"></div>
+                            </div>
+                            <div class="counter-row">Processed: <strong id="counter-details">0 / 0</strong></div>
+                            <div class="stats-pills-grid" id="stats-details">
+                                <div class="stat-mini-pill inserted">Inserted: <strong id="stat-inserted-details">0</strong></div>
+                                <div class="stat-mini-pill duplicates">Duplicates: <strong id="stat-dup-details">0</strong></div>
+                                <div class="stat-mini-pill failed">Failed: <strong id="stat-fail-details">0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- VIEW 3: Check Error Module View -->
+            <section id="check-error-view" class="view-section" style="display: none;">
+                <div class="check-error-container">
+
+                    <div class="modal-header" style="border:none;margin-bottom:0.5rem">
+                        <div>
+                            <h2>⚠️ Validation Check Error Module</h2>
+                            <p style="font-size:0.78rem;color:var(--text-muted);">Inspect, search, and correct
+                                Bangladesh Bank Return validation error records.</p>
+                        </div>
+
+                        <button type="button" class="glass-btn-primary" id="btn-refresh-errors"
+                            onclick="loadCheckErrors()">
+                            🔄 Refresh Errors
+                        </button>
+                    </div>
+
+                    <div class="error-toolbar">
+                        <span class="error-count-badge" id="error-total-badge">
+                            ⚠️ Total Error Records: <strong id="error-total-count">0</strong>
+                        </span>
+
+                        <input type="text" id="error-search-input" class="search-input-box"
+                            placeholder="🔍 Search error records..." oninput="handleSearchInput()">
+                    </div>
+
+                    <!-- Loading Spinner State -->
+                    <div id="error-loading-state" class="empty-error-box" style="display:none;">
+                        <span class="empty-error-icon">⏳</span>
+                        <h3>Loading error records...</h3>
+                        <p>Fetching validation error records from database...</p>
+                    </div>
+
+                    <!-- Disconnected State Box -->
+                    <div id="error-disconnected-state" class="empty-error-box">
+                        <span class="empty-error-icon">🔒</span>
+                        <h3>Database Disconnected</h3>
+                        <p>Please connect to the Oracle database using <strong>[ Database Connection ]</strong> in the
+                            top navigation bar or left sidebar.</p>
+                        <button type="button" class="glass-btn-primary" style="margin-top:1rem"
+                            onclick="openDBModal()">Connect Database</button>
+                    </div>
+
+                    <!-- Error Table Container -->
+                    <div id="error-table-wrapper" class="table-responsive" style="display:none;">
+                        <table class="glass-table" id="check-error-table">
+                            <thead id="error-table-head">
+                                <!-- Dynamic Columns Headers Rendered Here -->
+                            </thead>
+                            <tbody id="error-table-body">
+                                <!-- Dynamic Rows Rendered Here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State (No errors found) -->
+                    <div id="error-empty-state" class="empty-error-box" style="display:none;">
+                        <span class="empty-error-icon">🎉</span>
+                        <h3 style="color:var(--success)">No Errors Found</h3>
+                        <p>The error check completed successfully and no error records were returned.</p>
+                        <button type="button" class="glass-btn" style="margin-top:1rem"
+                            onclick="loadCheckErrors()">Refresh Errors</button>
+                    </div>
+
+                    <!-- Pagination Bar -->
+                    <div class="pagination-bar" id="error-pagination-bar"
+                        style="display:none;margin-top:1rem;display:flex;justify-content:space-between;align-items:center;">
+                        <div id="pagination-info" style="font-size:0.78rem;color:var(--text-muted);">Showing 0–0 of 0
+                            records</div>
+                        <div class="pagination-controls" style="display:flex;align-items:center;gap:0.5rem;">
+                            <button type="button" class="glass-btn" id="btn-page-prev" onclick="changePage(-1)">←
+                                Previous</button>
+                            <span id="pagination-page-indicator" style="padding:0 0.5rem;font-size:0.78rem;">Page 1 of
+                                1</span>
+                            <button type="button" class="glass-btn" id="btn-page-next" onclick="changePage(1)">Next
+                                →</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modals System -->
+
+    <!-- Update Error Record Modal -->
+    <div id="edit-placeholder-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:500px;width:92%;">
+            <div class="modal-header">
+                <h2>✏️ UPDATE ERROR RECORD</h2>
+                <button type="button" class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+
+            <div id="edit-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="edit-error-form" onsubmit="handleUpdateErrorSubmit(event)">
+                <div class="form-group">
+                    <label for="edit-table-name">Table Name:</label>
+                    <input type="text" id="edit-table-name" class="form-control-readonly" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-reference-no">Reference No:</label>
+                    <input type="text" id="edit-reference-no" class="form-control-readonly" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-remarks">Remarks:</label>
+                    <input type="text" id="edit-remarks" class="form-control-readonly" readonly required>
+                </div>
+
+                <div class="form-group" style="margin-top:1rem">
+                    <label for="edit-actual-reference" style="color:#c084fc;font-weight:700;">Actual Reference: <span
+                            style="color:var(--error)">*</span></label>
+                    <input type="text" id="edit-actual-reference" placeholder="Enter Actual Reference..." required
+                        style="border-color:rgba(168,85,247,0.6);background:rgba(7,10,20,0.85);color:#ffffff;">
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-submit-update">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DB Connection Modal -->
+    <div id="db-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass db-modal">
+            <div class="modal-header">
+                <h2>🔌 Oracle Database Connection</h2>
+                <button type="button" class="close-btn" onclick="closeDBModal()">&times;</button>
+            </div>
+
+            <div id="db-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="db-connect-form" onsubmit="handleDBConnect(event)">
+                <div class="form-group">
+                    <label for="db-host">Oracle Host</label>
+                    <input type="text" id="db-host" name="host" value="10.5.1.144" placeholder="e.g. 10.5.1.144"
+                        required>
+                </div>
+
+                <div class="form-row" style="display:flex;gap:0.75rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label for="db-port">Oracle Port</label>
+                        <input type="number" id="db-port" name="port" value="1540" placeholder="1540" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label for="db-service">Oracle Service</label>
+                        <input type="text" id="db-service" name="service" value="MBLPRIMEODN" placeholder="MBLPRIMEODN"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="db-username">Oracle Username</label>
+                    <input type="text" id="db-username" name="username" value="ultimus" placeholder="Database username"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="db-password">Oracle Password</label>
+                    <input type="password" id="db-password" name="password" value="ultimus123"
+                        placeholder="••••••••••••" required>
+                </div>
+
+                <div class="modal-actions space-between">
+                    <button type="button" class="glass-btn btn-danger" id="db-disconnect-btn"
+                        onclick="handleDBDisconnect()" style="display:none;">
+                        Disconnect
+                    </button>
+                    <div class="right-actions" style="display:flex;gap:0.5rem;margin-left:auto;">
+                        <button type="button" class="glass-btn" onclick="closeDBModal()">Close</button>
+                        <button type="submit" class="glass-btn-primary" id="db-connect-btn">Connect</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Finalize Table Selection Modal -->
+    <div id="finalize-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass finalize-modal">
+            <div class="modal-header">
+                <h2>✨ Finalize Imported Data</h2>
+                <button type="button" class="close-btn" onclick="closeFinalizeModal()">&times;</button>
+            </div>
+
+            <div id="finalize-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="finalize-select-form" onsubmit="handleFinalizeSelect(event)">
+                <div class="form-group">
+                    <label for="finalize-table-select">Select Table</label>
+                    <select id="finalize-table-select" class="form-select" required>
+                        <option value="">[ Select a table ▼ ]</option>
+                        <option value="a1_o1">A1_O1</option>
+                        <option value="arv">ARV</option>
+                        <option value="e2_p2">E2_P2</option>
+                        <option value="c_form">C_FORM</option>
+                        <option value="e3_p3">E3_P3</option>
+                        <option value="bbreturn_manual_tm">BBRETURN_MANUAL_TM</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeFinalizeModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="finalize-ok-btn">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Finalize Overwrite Confirmation Modal -->
+    <div id="finalize-confirm-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass confirm-box">
+            <h3 style="color:var(--warning);margin-top:0">⚠️ Warning: Existing Data Detected</h3>
+            <p id="finalize-confirm-text" style="font-size:0.84rem;color:var(--text-muted);margin:0.75rem 0 1.25rem;">
+                The selected table already contains imported data.<br>
+                This data may already have been processed previously.<br><br>
+                <strong style="color:var(--text-bright)">Do you want to overwrite/update the existing data?</strong>
+            </p>
+            <div class="confirm-actions" style="display:flex;justify-content:flex-end;gap:0.75rem;">
+                <button type="button" class="glass-btn" onclick="cancelFinalizeOverwrite()">No, Go Back</button>
+                <button type="button" class="glass-btn-primary btn-danger" onclick="executeFinalizeOverwrite()">Yes,
+                    Overwrite</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Finalize Success Modal -->
+    <div id="finalize-success-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass">
+            <h2 style="color:var(--success);margin-top:0">✓ Finalization Completed Successfully</h2>
+            <div id="finalize-success-content">
+                <table class="modal-table" style="width:100%;margin:1rem 0;font-size:0.82rem;">
+                    <tr>
+                        <td style="padding:0.35rem 0;color:var(--text-muted);">Table</td>
+                        <td style="text-align:right"><strong id="fin-res-table">A1_O1</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.35rem 0;color:var(--text-muted);">Branch ID</td>
+                        <td style="text-align:right"><strong style="color:var(--success)">Updated successfully</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.35rem 0;color:var(--text-muted);">SL No</td>
+                        <td style="text-align:right"><strong style="color:var(--success)">Generated
+                                successfully</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.35rem 0;color:var(--text-muted);">Total Records Processed</td>
+                        <td style="text-align:right"><strong id="fin-res-total">0</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.35rem 0;color:var(--text-muted);">SL No Range</td>
+                        <td style="text-align:right"><strong id="fin-res-range">1 to 0</strong></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-actions" style="justify-content:flex-end;margin-top:1.5rem">
+                <button type="button" class="glass-btn-primary" onclick="closeFinalizeSuccessModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Completion Modal -->
+    <div id="modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:520px;width:92%;overflow:hidden;">
+            <h2 id="modal-title">IMPORT COMPLETED</h2>
+            <div id="modal-content" style="margin:1rem 0;"></div>
+            <div class="modal-actions" style="justify-content:flex-end;gap:0.75rem;">
+                <a href="/logs" class="glass-btn">View Import Log</a>
+                <button type="button" class="glass-btn-primary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scheduler Modal -->
+    <div id="scheduler-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>📅 SCHEDULER</h2>
+                <button type="button" class="close-btn" onclick="closeSchedulerModal()">&times;</button>
+            </div>
+
+            <div id="scheduler-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="scheduler-form" onsubmit="handleSchedulerSubmit(event)">
+                <div class="form-group">
+                    <label for="scheduler-branch-input">Branch ID (Optional):</label>
+                    <input type="text" id="scheduler-branch-input" class="form-control"
+                        placeholder="Leave empty for All Branches">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="scheduler-month-select" style="color:#c084fc;font-weight:700;">Select Month <span
+                            style="color:var(--error)">*</span></label>
+                    <select id="scheduler-month-select" class="form-select" required>
+                        <option value="">[ Select Month ▼ ]</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="scheduler-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span
+                            style="color:var(--error)">*</span></label>
+                    <input type="number" id="scheduler-year-input" class="form-control" placeholder="e.g. 2026"
+                        min="2000" max="2100" required>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeSchedulerModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-scheduler">Run Scheduler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Modal -->
+    <div id="summary-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>📊 SUMMARY</h2>
+                <button type="button" class="close-btn" onclick="closeSummaryModal()">&times;</button>
+            </div>
+
+            <div id="summary-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="summary-form" onsubmit="handleSummarySubmit(event)">
+                <div class="form-group">
+                    <label for="summary-branch-input">Branch ID (Optional):</label>
+                    <input type="text" id="summary-branch-input" class="form-control"
+                        placeholder="Leave empty for All Branches">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="summary-month-select" style="color:#c084fc;font-weight:700;">Select Month <span
+                            style="color:var(--error)">*</span></label>
+                    <select id="summary-month-select" class="form-select" required>
+                        <option value="">[ Select Month ▼ ]</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="summary-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span
+                            style="color:var(--error)">*</span></label>
+                    <input type="number" id="summary-year-input" class="form-control" placeholder="e.g. 2026" min="2000"
+                        max="2100" required>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeSummaryModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-summary">Run Summary</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reconciliation Parameter Modal -->
+    <div id="reconciliation-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>🔁 RECONCILIATION</h2>
+                <button type="button" class="close-btn" onclick="closeReconciliationModal()">&#x2715;</button>
+            </div>
+
+            <div id="reconciliation-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="reconciliation-form" onsubmit="handleReconciliationSubmit(event)">
+                <div class="form-group" style="margin-top:0.25rem">
+                    <label for="reconciliation-month-select" style="color:#c084fc;font-weight:700;">Select Month <span
+                            style="color:var(--error)">*</span></label>
+                    <select id="reconciliation-month-select" class="form-select" required>
+                        <option value="">[ Select Month ▼ ]</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="reconciliation-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year
+                        <span style="color:var(--error)">*</span></label>
+                    <input type="number" id="reconciliation-year-input" class="form-control" placeholder="e.g. 2026"
+                        min="2000" max="2100" required>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeReconciliationModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-reconciliation"
+                        style="background:linear-gradient(135deg, #059669, #047857) !important;">Run
+                        Reconciliation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reconciliation Result Modal -->
+    <div id="reconciliation-result-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:580px;width:92%;">
+            <div class="modal-header">
+                <h2 id="reconciliation-result-title" style="color:var(--success)">✓ Reconciliation Completed</h2>
+                <button type="button" class="close-btn" onclick="closeReconciliationResultModal()">&#x2715;</button>
+            </div>
+
+            <div style="margin:1rem 0;font-size:0.84rem;">
+                <div style="display:flex;gap:1.5rem;margin-bottom:0.85rem;">
+                    <p><strong>Month:</strong> <span id="reconciliation-result-month"
+                            style="color:#60a5fa;font-weight:700;"></span></p>
+                    <p><strong>Year:</strong> <span id="reconciliation-result-year"
+                            style="color:#34d399;font-weight:700;"></span></p>
+                </div>
+
+                <div id="reconciliation-table-container"
+                    style="max-height:260px;overflow-y:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.2);margin-bottom:1rem;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.8rem;text-align:left;">
+                        <thead>
+                            <tr
+                                style="background:rgba(168,85,247,0.2);color:#c084fc;border-bottom:1px solid rgba(255,255,255,0.1);">
+                                <th style="padding:0.6rem 0.8rem;">Report Type</th>
+                                <th style="padding:0.6rem 0.8rem;text-align:right;">Schedules</th>
+                                <th style="padding:0.6rem 0.8rem;text-align:right;">Raw Data</th>
+                                <th style="padding:0.6rem 0.8rem;text-align:center;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reconciliation-table-body">
+                            <!-- Populated dynamically by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div
+                    style="padding:0.75rem 1rem;border-radius:0.6rem;background:rgba(5,150,105,0.12);border:1px solid rgba(5,150,105,0.35);">
+                    <p
+                        style="margin:0 0 0.25rem;font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;">
+                        Status:</p>
+                    <p id="reconciliation-result-presult"
+                        style="margin:0;color:#ffffff;font-weight:600;font-size:0.85rem;word-break:break-word;"></p>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="justify-content:flex-end;margin-top:1.25rem">
+                <button type="button" class="glass-btn-primary"
+                    onclick="closeReconciliationResultModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reconciliation Error Popup Modal -->
+    <div id="reconciliation-error-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:480px;width:92%;">
+            <div class="modal-header">
+                <h2 style="color:var(--error);display:flex;align-items:center;gap:0.5rem;">⚠️ <span
+                        id="reconciliation-error-title">Reconciliation Notice</span></h2>
+                <button type="button" class="close-btn" onclick="closeReconciliationErrorModal()">&#x2715;</button>
+            </div>
+
+            <div style="margin:1rem 0;font-size:0.85rem;">
+                <div
+                    style="padding:1rem;border-radius:0.6rem;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.35);margin-bottom:1rem;">
+                    <p id="reconciliation-error-message"
+                        style="margin:0;color:#fca5a5;font-weight:500;line-height:1.45;word-break:break-word;"></p>
+                </div>
+                <p style="color:var(--text-muted);font-size:0.8rem;margin:0;">Please verify your selected Month and Year
+                    or check database connection before retrying.</p>
+            </div>
+
+            <div class="modal-actions space-between" style="margin-top:1.25rem">
+                <button type="button" class="glass-btn" onclick="closeReconciliationErrorModal()">Close</button>
+                <button type="button" class="glass-btn-primary"
+                    style="background:linear-gradient(135deg, #059669, #047857) !important;"
+                    onclick="closeReconciliationErrorModal();openReconciliationModal();">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reconciliation Details Parameter Modal -->
+    <div id="reconciliation-details-param-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>🔍 MISMATCH DETAILS</h2>
+                <button type="button" class="close-btn"
+                    onclick="closeReconciliationDetailsParamModal()">&#x2715;</button>
+            </div>
+
+            <div id="reconciliation-details-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="reconciliation-details-form" onsubmit="handleReconciliationDetailsSubmit(event)">
+                <div class="form-group" style="margin-top:0.25rem">
+                    <label style="color:var(--text-muted);font-weight:700;">Report Type (Auto-populated)</label>
+                    <input type="text" id="details-report-type-input" class="form-control" readonly
+                        style="background:rgba(255,255,255,0.05);color:#fca5a5;font-weight:700;cursor:not-allowed;">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="details-month-select" style="color:#c084fc;font-weight:700;">Select Month <span
+                            style="color:var(--error)">*</span></label>
+                    <select id="details-month-select" class="form-select" required>
+                        <option value="">[ Select Month ▼ ]</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem">
+                    <label for="details-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span
+                            style="color:var(--error)">*</span></label>
+                    <input type="number" id="details-year-input" class="form-control" placeholder="e.g. 2026" min="2000"
+                        max="2100" required>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn"
+                        onclick="closeReconciliationDetailsParamModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-reconciliation-details"
+                        style="background:linear-gradient(135deg, #e11d48, #be123c) !important;">Run Details</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reconciliation Details Result Modal -->
+    <div id="reconciliation-details-result-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:540px;width:92%;">
+            <div class="modal-header">
+                <h2 id="details-result-title" style="color:#fca5a5;">📋 Mismatch Reference Details</h2>
+                <button type="button" class="close-btn"
+                    onclick="closeReconciliationDetailsResultModal()">&#x2715;</button>
+            </div>
+
+            <div style="margin:1rem 0;font-size:0.84rem;">
+                <div
+                    style="display:flex;gap:1.5rem;margin-bottom:0.85rem;background:rgba(255,255,255,0.03);padding:0.6rem 0.8rem;border-radius:6px;border:1px solid rgba(255,255,255,0.08);">
+                    <p style="margin:0;"><strong>Report Type:</strong> <span id="details-result-report-type"
+                            style="color:#fca5a5;font-weight:700;"></span></p>
+                    <p style="margin:0;"><strong>Month:</strong> <span id="details-result-month"
+                            style="color:#60a5fa;font-weight:700;"></span></p>
+                    <p style="margin:0;"><strong>Year:</strong> <span id="details-result-year"
+                            style="color:#34d399;font-weight:700;"></span></p>
+                </div>
+
+                <div
+                    style="max-height:280px;overflow-y:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.25);margin-bottom:1rem;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.8rem;text-align:left;">
+                        <thead>
+                            <tr
+                                style="background:rgba(225,29,72,0.2);color:#fda4af;border-bottom:1px solid rgba(255,255,255,0.1);">
+                                <th style="padding:0.6rem 0.8rem;width:80px;text-align:center;">SL No</th>
+                                <th style="padding:0.6rem 0.8rem;">Reference Number</th>
+                            </tr>
+                        </thead>
+                        <tbody id="details-table-body">
+                            <!-- Populated dynamically by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div
+                    style="padding:0.65rem 0.85rem;border-radius:0.6rem;background:rgba(225,29,72,0.12);border:1px solid rgba(225,29,72,0.35);">
+                    <p id="details-result-summary"
+                        style="margin:0;color:#ffffff;font-weight:500;font-size:0.82rem;word-break:break-word;"></p>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="justify-content:flex-end;margin-top:1.25rem">
+                <button type="button" class="glass-btn-primary"
+                    onclick="closeReconciliationDetailsResultModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Report Modal -->
+    <div id="download-report-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:480px; width:92%;">
+            <div class="modal-header">
+                <h2>📄 DOWNLOAD SCHEDULE REPORT</h2>
+                <button type="button" class="close-btn" onclick="closeReportModal()">&times;</button>
+            </div>
+
+            <div id="report-modal-alert" class="modal-alert" style="display:none;"></div>
+
+            <form id="report-form" onsubmit="handleReportSubmit(event)">
+                <div class="form-group">
+                    <label for="report-branch-input">Branch ID (Optional):</label>
+                    <input type="text" id="report-branch-input" class="form-control"
+                        placeholder="Leave empty for All Branches">
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem;">
+                    <label for="report-month-select" style="color:#c084fc;font-weight:700;">Select Month <span
+                            style="color:var(--error)">*</span></label>
+                    <select id="report-month-select" class="form-select" required>
+                        <option value="" disabled selected>-- Select Month --</option>
+                        <option value="1">January (01)</option>
+                        <option value="2">February (02)</option>
+                        <option value="3">March (03)</option>
+                        <option value="4">April (04)</option>
+                        <option value="5">May (05)</option>
+                        <option value="6">June (06)</option>
+                        <option value="7">July (07)</option>
+                        <option value="8">August (08)</option>
+                        <option value="9">September (09)</option>
+                        <option value="10">October (10)</option>
+                        <option value="11">November (11)</option>
+                        <option value="12">December (12)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem;">
+                    <label for="report-year-input" style="color:#c084fc;font-weight:700;">Select / Enter Year <span
+                            style="color:var(--error)">*</span></label>
+                    <input type="number" id="report-year-input" class="form-control" placeholder="e.g. 2026" min="2000"
+                        max="2100" required>
+                </div>
+
+                <div class="form-group" style="margin-top:0.85rem;">
+                    <label for="report-schedule-name-select" style="color:#c084fc;font-weight:700;">Schedule Name <span
+                            style="color:var(--error)">*</span></label>
+                    <select id="report-schedule-name-select" class="form-select" required>
+                        <option value="" disabled selected>-- Select Schedule Name --</option>
+                        <option value="elpaynt">elpaynt</option>
+                        <option value="exprecpt">exprecpt</option>
+                        <option value="invpaynt">invpaynt</option>
+                        <option value="invrecpt">invrecpt</option>
+                        <option value="misc">misc</option>
+                        <option value="imppaynt">imppaynt</option>
+                        <option value="Wagremit">Wagremit</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions space-between" style="margin-top:1.5rem">
+                    <button type="button" class="glass-btn" onclick="closeReportModal()">Cancel</button>
+                    <button type="submit" class="glass-btn-primary" id="btn-run-report">Download Report (.txt)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Process Success Notification Modal -->
+    <div id="process-success-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2 id="process-success-title" style="color:var(--success)">✓ Process Executed Successfully</h2>
+                <button type="button" class="close-btn" onclick="closeProcessSuccessModal()">&times;</button>
+            </div>
+
+            <div id="process-success-body" style="margin:1rem 0;font-size:0.84rem;">
+                <p><strong>Process:</strong> <span id="process-success-name"
+                        style="color:#c084fc;font-weight:700;">Scheduler</span></p>
+                <p><strong>Month:</strong> <span id="process-success-month"
+                        style="color:#60a5fa;font-weight:700;">January</span></p>
+                <p><strong>Year:</strong> <span id="process-success-year"
+                        style="color:#34d399;font-weight:700;">2026</span></p>
+                <p id="process-success-detail" style="margin-top:0.75rem;color:var(--text-muted);">The process has
+                    completed and changes have been committed successfully.</p>
+            </div>
+
+            <div class="modal-actions" style="justify-content:flex-end">
+                <button type="button" class="glass-btn-primary" onclick="closeProcessSuccessModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Process Monitoring Tools Modal (Opened from Dashboard Card 4) -->
+    <div id="process-monitoring-modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal-glass" style="max-width:440px;width:92%;">
+            <div class="modal-header">
+                <h2>🗓️ PROCESS MONITORING</h2>
+                <button type="button" class="close-btn" onclick="closeProcessMonitoringModal()">&#x2715;</button>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin:0.75rem 0 1.1rem;">Select a process monitoring
+                tool to execute return schedulers or generate monthly summaries:</p>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                <button type="button" class="glass-btn-primary"
+                    style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;"
+                    onclick="closeProcessMonitoringModal();openSchedulerModal();">
+                    <span style="font-weight:700;">📅 Run Return Scheduler</span>
+                    <span>Execute →</span>
+                </button>
+                <button type="button" class="glass-btn-primary"
+                    style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;background:linear-gradient(135deg, #0284c7, #2563eb) !important;"
+                    onclick="closeProcessMonitoringModal();openSummaryModal();">
+                    <span style="font-weight:700;">📊 Run Return Summary</span>
+                    <span>Execute →</span>
+                </button>
+                <!-- Reconciliation button: hidden until scheduler_completed && summary_completed -->
+                <button type="button" class="glass-btn-primary recon-hidden" id="btn-process-monitoring-reconciliation"
+                    style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;background:linear-gradient(135deg, #059669, #047857) !important;"
+                    onclick="closeProcessMonitoringModal();openReconciliationModal();">
+                    <span style="font-weight:700;">🔁 Run Reconciliation</span>
+                    <span>Execute →</span>
+                </button>
+            </div>
+            <div class="modal-actions" style="margin-top:1.25rem;justify-content:flex-end;">
+                <button type="button" class="glass-btn" onclick="closeProcessMonitoringModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Client Scripts -->
+    <script src="/static/js/login.js?v=600"></script>
+    <script src="/static/js/import.js?v=601"></script>
+    <script src="/static/js/check_error.js?v=601"></script>
+    <script src="/static/js/process_manager.js?v=20260902_4"></script>
+
+
+    <!-- Animated Cloud Shader Background -->
+    <canvas id="cloud-canvas"></canvas>
+    <script>
+        (function () {
+            const canvas = document.getElementById('cloud-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W, H, t = 0;
+            const nodes = [];
+            const NUM = 7;
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const colors = [
+                [126, 34, 206],  // deep purple
+                [168, 85, 247],  // purple accent
+                [59, 130, 246],  // blue accent
+                [107, 33, 168],  // dark violet
+                [30, 58, 138],   // deep navy
+                [147, 51, 234],  // violet
+                [15, 23, 42],    // navy
+            ];
+            for (let i = 0; i < NUM; i++) {
+                nodes.push({
+                    x: Math.random() * 2 - 1,
+                    y: Math.random() * 2 - 1,
+                    vx: (Math.random() - 0.5) * 0.0005,
+                    vy: (Math.random() - 0.5) * 0.0005,
+                    r: 0.38 + Math.random() * 0.32,
+                    color: colors[i % colors.length],
+                    phase: Math.random() * Math.PI * 2,
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                const mx = W > H ? W : H;
+                for (const n of nodes) {
+                    n.x += n.vx; n.y += n.vy;
+                    if (n.x < -1.2) n.x = 1.2;
+                    if (n.x > 1.2) n.x = -1.2;
+                    if (n.y < -1.2) n.y = 1.2;
+                    if (n.y > 1.2) n.y = -1.2;
+
+                    const pulse = 1 + Math.sin(t * 0.012 + n.phase) * 0.18;
+                    const rPx = n.r * mx * pulse;
+                    const cx = n.x * W;
+                    const cy = n.y * H;
+                    const [r, g, b] = n.color;
+
+                    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, rPx);
+                    grad.addColorStop(0, `rgba(${r},${g},${b},0.2)`);
+                    grad.addColorStop(0.5, `rgba(${r},${g},${b},0.07)`);
+                    grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, rPx, 0, Math.PI * 2);
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+                }
+                t += 1;
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+    </script>
+</body>
+
+</html>
