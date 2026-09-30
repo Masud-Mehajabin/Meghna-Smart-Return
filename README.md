@@ -1,4 +1,4 @@
-# CIB Data Integration & Validation System (CIB-DIVS)
+# CSV Data Integration & Validation System (Meghna Smart Return)
 
 Production-grade FastAPI CSV Import Automation & Database System for Oracle Database.
 
